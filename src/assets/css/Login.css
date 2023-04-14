@@ -1,0 +1,111 @@
+.my-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    margin-top: 20vh;
+    cursor: pointer;
+    /*opacity: 0.98;*/
+    z-index: 10;
+    background: #ffffff;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 5px;
+    box-shadow: 3.4px 2.9px 2.7px rgba(0, 0, 0, 0.009),
+    8.7px 7.2px 6.9px rgba(0, 0, 0, 0.013),
+    17.7px 14.7px 14.2px rgba(0, 0, 0, 0.017),
+    36.5px 30.3px 29.2px rgba(0, 0, 0, 0.021),
+    100px 83px 80px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    transition: 0.8s;
+}
+.login-box:hover{
+    transform: translateY(-3px);
+}
+
+.login-header {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: black;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.username-box {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-input {
+    width: 85%;
+    background: #f1f1f1;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    padding: 0 10px;
+}
+.login-button{
+    width: calc( 85% + 20px);
+    border-radius: 5px;
+    background: #00b0ff;
+    color: white;
+    font-size: 20px;
+    height: 40px;
+    line-height: 40px;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.login-button:hover{
+    background: #00abf5;
+}
+.login-button:active{
+    background: #008dcb;
+}
+.icon-box{
+    width: 85%;
+
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+.login-3rd-icon{
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+}
+
+.background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.mobile{
+    display: none;
+}
+@media (max-width: 600px) {
+    .pc {
+        display: none;
+    }
+    .mobile{
+        display: block;
+    }
+}
+

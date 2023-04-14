@@ -1,0 +1,22 @@
+.rate-label{
+    width: 180px;
+    font-size: 23px;
+    color: #000000;
+}
+.t-green{
+
+}
+.confirm-btn-small{
+    color: #ffffff;
+    font-size: 35px;
+    margin: 0 30px;
+    width: 250px;
+    height: 60px;
+    border-radius: 8px;
+    background: #02b3ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    cursor: pointer;
+}

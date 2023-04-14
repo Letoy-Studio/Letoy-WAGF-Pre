@@ -1,0 +1,43 @@
+.head-container{
+    align-items: center;
+    height: 60px;
+    background: #003cab;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    z-index: 999;
+}
+.head-title{
+    color: #F7FAFC;
+    font-size: 20px;
+    height: 52px;
+    line-height: 52px;
+    margin-left: 10px;
+}
+
+.head-logo{
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 100%;
+}
+
+.head-img-box{
+    height: 52px;
+    width: 52px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.head-img-box img{
+    width: 25px;
+    height: 25px;
+}
+.welcome-text{
+    margin-left: auto;
+    font-size: 15px;
+    color: #ffffff;
+}

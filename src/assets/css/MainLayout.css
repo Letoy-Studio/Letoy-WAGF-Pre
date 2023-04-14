@@ -1,0 +1,26 @@
+
+.l-content {
+    width: calc(100vw - 230px);
+    display: flex;
+    flex-direction: column;
+    height: calc( 100vh - 60px);
+    max-height: calc( 100vh - 60px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.l-menu {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    height: calc( 100vh - 60px);
+    max-height: calc( 100vh - 60px);
+    background: #ffffff;
+    overflow-y: auto;
+}
+
+.l-menu::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}

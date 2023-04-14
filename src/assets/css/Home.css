@@ -1,0 +1,141 @@
+.card {
+    margin: 5px 10px;
+    width: calc(100% - 20px);
+    height: 100px;
+    border: 1px solid rgb(244, 244, 244);
+    border-radius: 8px;
+    box-shadow: 4px 4px 8px rgba(234, 234, 234, 0.3);
+    background: #ffffff;
+}
+
+.card:first-child {
+    margin-top: 10px;
+}
+
+.block-name {
+    /*background: #ffffff;*/
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    font-size: 30px;
+    margin-left: 20px;
+    display: flex;
+}
+
+.card-title {
+    font-size: 25px;
+    color: #ffffff;
+}
+
+.card-des {
+    font-size: 18px;
+    margin-top: 18px;
+    color: #ffffff;
+}
+
+.blue {
+    background: #337ecc;
+}
+
+.green {
+    background: #529b2e;
+}
+
+.green2 {
+    background: #b3e19d;
+}
+
+.blue2 {
+    background: #a0cfff;
+}
+
+.red2 {
+    background: #f89898;
+}
+
+.chart-title {
+    margin: 20px;
+    font-size: 25px;
+}
+
+.progress-title {
+    font-size: 20px;
+    margin: 0 20px;
+    height: 30px;
+}
+
+.simple-shadow {
+    box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.05);
+}
+
+.card-bg {
+    width: 100%;
+    position: absolute;
+    border-radius: 8px 8px 0 0;
+    z-index: 0;
+}
+
+.home-card {
+    width: 260px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 16px;
+    padding: 10px;
+    background: #ffffff;
+    margin: 20px;
+    box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.05);
+}
+
+.beauty-black{
+    background: linear-gradient(41.14deg, rgba(49,56,96,1) 100%,rgba(21,25,40,1) 13%);
+}
+.page-head{
+    font-size: 25px;
+    font-weight: 600;
+}
+.list-item-date{
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+}
+.list-item-time{
+    font-size: 18px;
+    font-weight: 600;
+    color: #545454;
+    margin: 0 5px;
+}
+.list-item-username{
+    font-size: 18px;
+    font-weight: 400;
+    color: #00abf5;
+    margin: 0 5px 0 10px;
+}
+
+.list-item-action-name{
+    font-size: 18px;
+    font-weight: 400;
+    color: #000000;
+    margin: 0 5px;
+}
+
+.list-item-project-name{
+    font-size: 18px;
+    font-weight: 400;
+    color: #008858;
+    margin: 0 5px;
+}
+
+.list-item-project-type{
+    font-size: 18px;
+    font-weight: 400;
+    color: #000000;
+    margin: 0;
+}
+.list-item-link{
+    font-size: 18px;
+    font-weight: 400;
+    color: #d54941;
+    margin-left: 10px;
+    cursor: pointer;
+}

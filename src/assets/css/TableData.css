@@ -1,0 +1,25 @@
+.title{
+    font-size: 25px;
+    font-weight: 600;
+    color: #000000;
+    margin: 10px 15px;
+}
+.table-head{
+    margin-left: 10px;
+}
+.table-content{
+    margin: 0 10px;
+}
+.table-content-box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.collapse-box{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    border-left: 1px solid #ebeef5;
+    border-right: 1px solid #ebeef5;
+}
