@@ -3,6 +3,7 @@
     <div class="l-row">
       <t-button style="margin-top: 20px;margin-left: 10px;" @click="initMQTT">链接MQTT</t-button>
       <t-button style="margin-top: 20px;margin-left: 10px;" @click="closeConnect">关闭MQTT</t-button>
+      <t-button style="margin-top: 20px;margin-left: 10px;" @click="showPicList = true">打開數據列表</t-button>
     </div>
 
   </div>
@@ -13,7 +14,9 @@
 
   <!--  {{frame[0]}}-->
   <!--  <div style="width: 1200px;height: 1200px;" id="main"></div>-->
-  <canvas id="myCanvas" width="1200" height="500"></canvas>
+  <canvas id="myCanvas" width="960" height="540"
+          style=" transform: scaleX(-1);background: url('https://cypress-beijing-backgroundimage.s3.cn-north-1.amazonaws.com.cn/2420/17189/bg-token-2?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS5KYCLX2QO2IWZOW%2F20231115%2Fcn-north-1%2Fs3%2Faws4_request&X-Amz-Date=20231115T195552Z&X-Amz-Expires=3600&X-Amz-Signature=350fca2afef1c796feadd27724fadd8abef8350520fa3d2cd4077b2fe1e7adbc&X-Amz-SignedHeaders=host') no-repeat;background-size: cover"></canvas>
+  <div v-if="showPicList">{{ picList }}</div>
 </template>
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
@@ -26,105 +29,54 @@ import * as echarts from 'echarts';
       base64String: "gCIAAAIAAAD/////AQAAAMjg/D7nY/A+tSvRPvQxuD4Mzsc+DM4HP7UrET/C+Rg/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAV6L2PgAAAD8G5+M+nI8BP5GFbD+GLGQ/LWRhP5GFbD+c3nQ/05teP9/0Zj+nN30/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3/RmP4YsZD8tZGE/LWRhP4woAAAAAAAAXokaP87HID+J2hU/wvkYPwAAAAB3JSo/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADC+Rg/lqgdPwAAAAAG5yM/ZCFLP296Uz9velM/nN50PwAAAABvelM/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACykEU/spBFPwAAAACykEU/",
       frame: [],
       lastFrameNum: "",
-      "username": "2420-05f2113a-ef0e-4d2f-a951-cd8d6c61aab1",
-      "passcode": "HQboOYbAJDgad2mFT9TdCKjyZ8cd9tp8",
-      client: null,
+      "username": "2420-586978c8-59ef-45ea-a064-be582ab1a048",
+      "passcode": "ylFqir146y95GS4S8wM3ZL8my3SmBB8T",
+      client: undefined,
       currentPic: {},
-      res:[]
+      res: [],
+      picList: [],
+      pointPairs: [
+        {start: 0, end: 1, color: 'pink'},
+        {start: 1, end: 2, color: 'orange'},
+        {start: 2, end: 3, color: 'yellow'},
+        {start: 3, end: 4, color: 'lightYellow'},
+        {start: 1, end: 5, color: 'darkSalmon'},
+        {start: 5, end: 6, color: 'salmon'},
+        {start: 6, end: 7, color: 'lightSalmon'},
+        {start: 1, end: 8, color: 'darkTurquoise'},
+        {start: 8, end: 9, color: 'turquoise'},
+        {start: 9, end: 10, color: 'paleTurquoise'},
+        {start: 1, end: 11, color: 'darkRed'},
+        {start: 11, end: 12, color: 'red'},
+        {start: 12, end: 13, color: 'orange'},
+        {start: 0, end: 14, color: 'purple'},
+        {start: 14, end: 16, color: 'purple'},
+        {start: 0, end: 15, color: 'violet'},
+        {start: 15, end: 17, color: 'violet'}
+      ],
+      canvasWidth: 960,
+      canvasHeight: 540,
+      showPicList: false,
+      canvas:undefined,
+      ctx:undefined
     }
   },
   mounted() {
-    // this.encodeString();
-    // this.connectMqtt();
-    // this.initCharts();
-    // this.initMQTT();
-    // this.encodeString();
+    this.initCanvas();
+    this.drawLine(13,13,24,24)
   },
   methods: {
-    constructor() {
-      this.frame = [];
-      this.lastFrameNum = 0; // Assuming this is a class member
-    },
-    storeFrame(data: any) {
-      console.log(data)
-      let currentPic = [];
-      let frameNum = this.parseHex(data, 0, 4);
-      if (frameNum <= this.lastFrameNum) {
-        return;
-      }
-      this.lastFrameNum = frameNum;
-      let numOfPeople = this.parseHex(data, 4, 8);
-      for (let i = 0; i < numOfPeople; i++) {
-        let startIndex = 8 + 152 * i;
-        let endIndex = startIndex + 152;
-
-        let personId = this.parseHex(data, startIndex, startIndex + 4);
-        let trackerId = this.parseHex(data, startIndex + 4, startIndex + 8);
-
-        let xyCoords = [];
-        for (let j = startIndex + 8; j < endIndex; j += 4) {
-          let num = this.parseHex(data, j, j + 4);
-          let coord = this.toFloat32(num);
-          xyCoords.push(coord);
-        }
-
-        let skeleton = {
-          TrackerId: trackerId,
-          PersonId: personId,
-          XCoords: xyCoords.slice(0, 18),
-          YCoords: xyCoords.slice(18, 36)
-        };
-        // currentPic.push(skeleton);
-        this.frame.push(skeleton);
-        currentPic.push(skeleton)
-      }
-      console.log(currentPic)
-      this.drawPic(currentPic);
-    },
     closeConnect() {
-      this.client.disconnect();
+      this.client.end();
     },
-    parseHex(data: any, start: any, end: any) {
-      let hexString = '';
-      for (let i = end - 1; i >= start; i--) {
-        hexString += ('0' + data[i].toString(16)).slice(-2);
-      }
-      return parseInt(hexString, 16);
-    },
-    toFloat32(num: any) {
-      let arr = new ArrayBuffer(4);
-      let view = new DataView(arr);
-      view.setUint32(0, num);
-      return view.getFloat32(0);
-    },
-    encodeString(data: any) {
-      // let decodedString = ;
-      // let byteArray = new Uint8Array(decodedString.length);
-      // for (let i = 0; i < decodedString.length; i++) {
-      //   byteArray[i] = decodedString.charCodeAt(i);
-      // }
-      this.constructor();
-      // this.storeFrame(this.uint8ArrayToBase64(data));
 
-      // let decodedString = window.atob(this.base64String);
-      let decodedString = window.atob(this.uint8ArrayToBase64(data));
-      let byteArray = new Uint8Array(decodedString.length);
-      for (let i = 0; i < decodedString.length; i++) {
-        byteArray[i] = decodedString.charCodeAt(i);
-      }
-      console.log(byteArray)
-
-      this.storeFrame(byteArray);
-
-    },
     initMQTT() {
       this.connectMqtt();
     },
-    // mqtt链接
     connectMqtt() {
       const options = {
         clean: true, // 保留会话
-        connectTimeout: 4000, // 超时时间
+        connectTimeout: 200, // 超时时间
         reconnectPeriod: 4000, // 重连时间间
         clientId: 'test123',//唯一值
         port: 8084,//端口
@@ -154,84 +106,114 @@ import * as echarts from 'echarts';
       })
       this.client = client;
     },
-    initCharts() {
-      this.storeFrame(this.base64String);
-      let records = []
-      for (let i = 0; i < this.frame.length; i++) {
-        for (let x = 0; x < this.frame[i].XCoords.length; x++) {
-          records.push(
-              [this.frame[i].XCoords[x], this.frame[i].YCoords[x]])
+
+    encodeString(data: any) {
+      data = this.uint8ArrayToBase64(data);
+      let decodedString = window.atob(data);
+      let byteArray = new Uint8Array(decodedString.length);
+      for (let i = 0; i < decodedString.length; i++) {
+        byteArray[i] = decodedString.charCodeAt(i);
+      }
+      const byteList = byteArray;
+      const frameNum = this.parseStringInt32(byteList, 0)
+      const numPeople = this.parseStringInt32(byteList, 4)
+      const people = []
+      for (let i = 0; i < numPeople; i++) {
+        const pos = 8 + 152 * i;
+        const personId = this.parseStringInt32(byteList, pos);
+        let person: any = {};
+        if (byteList.length >= pos + 80 + 17 * 4) {
+          // 确保在读取数据之前，pos + 80 + 17 * 4 不会超过 byteList 的长度
+          for (let j = 0; j < 18; j++) {
+            const x = this.parseStringFloat(byteList, pos + 8 + j * 4);
+            const y = this.parseStringFloat(byteList, pos + 80 + j * 4);
+            if (x && y) person[j] = {x, y};
+          }
+          person.name = personId;
+          people.push(person);
         }
       }
-      console.log(records);
-      type EChartsOption = echarts.EChartsOption;
-      var chartDom = document.getElementById('main')!;
-      var myChart = echarts.init(chartDom);
-      var option: EChartsOption;
-      option = {
-        xAxis: {},
-        yAxis: {},
-        series: [
-          {
-            symbolSize: 20,
-            data: records,
-            type: 'scatter'
-          }
-        ]
-      };
-      option && myChart.setOption(option);
+      this.drawPic(people)
     },
-    drawPic(data: any) {
+    //低版本浏览器使用此方法
+    uint8ArrayToBase64(uint8Array: any) {
+      try {
+        let CHUNK_SIZE = 0x8000;
+        let index = 0;
+        let length = uint8Array.length;
+        let res = "";
+        let slice;
+        while (index < length) {
+          slice = uint8Array.subarray(index, Math.min(index + CHUNK_SIZE, length));
+          res += String.fromCharCode.apply(null, slice);
+          index += CHUNK_SIZE;
+        }
+        return window.btoa(res);
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    initCanvas() {
       let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
-      let ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-
-
-      ctx.clearRect(0, 0, 1200, 500);
-      var dpr = window.devicePixelRatio || 1;
-
-      var rect = canvas.getBoundingClientRect();
-
+      let dpr = window.devicePixelRatio || 1;
+      let rect = canvas.getBoundingClientRect();
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-
       canvas.style.width = rect.width + 'px';
       canvas.style.height = rect.height + 'px';
 
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
       ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+      this.canvas = canvas;
+      this.ctx = ctx;
 
-      let resPics: any[][][] = [];
-      data.forEach((item: any) => {
-        let records = [];
-        for (let x = 0; x < item.XCoords.length; x++) {
-          records.push(
-              [item.XCoords[x], item.YCoords[x]])
+    },
+    drawPic(people: any) {
+
+      if (people) {
+        people.forEach((person:any) => {
+          this.drawSkeleton(5, person);
+        })
+      }
+    },
+    drawLine( x0: any, y0: any, x1: any, y1: any) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x0, y0);
+      this.ctx.lineTo(x1, y1);
+      this.ctx.stroke();
+    },
+    parseStringInt32(stringData: any, startIndex: any) {
+      if (startIndex + 4 <= stringData.length) {
+        const t = stringData.slice(startIndex, startIndex + 4);
+        return new DataView(t.buffer).getInt32(0, true);
+      }
+    },
+    parseStringFloat(stringData: any, startIndex: any) {
+      if (startIndex + 4 <= stringData.length) {
+        const t = stringData.slice(startIndex, startIndex + 4);
+        return new DataView(t.buffer).getFloat32(0, true);
+      }
+    },
+    drawSkeleton( lineWidth: any, points: any) {
+      this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+      this.ctx.lineWidth = lineWidth;
+      this.ctx.lineCap = 'round';
+
+      let minX = 1;
+      let minY = 1;
+      this.pointPairs.forEach((pair: any) => {
+        const startPoint = points[pair.start];
+        const endPoint = points[pair.end];
+        if (startPoint !== undefined && endPoint !== undefined) {
+          if (endPoint.x < minX) minX = endPoint.x;
+          if (endPoint.y < minY) minY = endPoint.y;
+          this.ctx.strokeStyle = pair.color;
+          this.drawLine(startPoint.x * this.canvasWidth, startPoint.y * this.canvasHeight, endPoint.x * this.canvasWidth, endPoint.y * this.canvasHeight);
         }
-        resPics.push(records);
       })
-      resPics.forEach((points: any) => {
-        let res: any = [];
-        points.forEach(function (point: any) {
-          res.push({x: point[0], y: point[1]})
-          console.log();
-          ctx.beginPath();
-          ctx.fillStyle = '#003cab';
-          ctx.arc(point[0] * 500, -point[1] * 500 + 500, 5, 0, 2 * Math.PI); // 绘制圆形点，5 是半径
-          // ctx.fillRect(point.x - 2.5, point.y - 2.5, 5, 5); // 或者绘制小方块，5x5 尺寸
-          ctx.fill();
-          ctx.closePath();
-        });
-        this.res = res
-      })
+    }
 
-
-    },
-    uint8ArrayToBase64(uint8Array: any) {
-      // 将每个字节转换为字符
-      var binaryString = uint8Array.reduce((acc: any, byte: any) => acc + String.fromCharCode(byte), '');
-
-      // 使用 btoa 进行 Base64 编码
-      return btoa(unescape(encodeURIComponent(binaryString)));
-    },
   }
 })
 
