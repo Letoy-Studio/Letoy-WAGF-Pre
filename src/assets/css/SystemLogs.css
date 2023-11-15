@@ -1,0 +1,126 @@
+.log {
+    white-space: nowrap;
+    word-break: keep-all;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    flex-direction: row;
+    height: 30px;
+    line-height: 30px;
+    flex-wrap: nowrap;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+}
+
+.warning {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #e6a23c;
+}
+
+.access {
+    margin: 0 10px;
+    color: #00a1da;
+    font-size: 19px;
+}
+
+.transaction {
+    margin: 0 10px;
+    color: #67C23A;
+    font-size: 19px;
+}
+
+.log-p-active-code {
+    margin: 0 10px;
+    color: #70CA86;
+    font-size: 19px;
+}
+
+.allow {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #67C23A;
+}
+
+.deny {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #FF0000;
+}
+
+.log-time {
+    font-size: 19px;
+}
+
+.log-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.log-p-s-green {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #5DC3C4;
+}
+
+.log-p-purple {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #D16DD3;
+}
+
+.log-p-blue {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #00a1da;
+}
+
+.log-p-green {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #67C23A;
+}
+
+.log-p-red {
+    margin: 0 10px;
+    font-size: 19px;
+    color: #FF0000;
+}
+
+.log-text {
+    /*border: 1px solid #59666e;*/
+    background: #f6f6f6;
+    border-radius: 8px;
+    width: calc(100% - 20px);
+    height: 400px;
+    line-height: 22px;
+    font-size: 15px;
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    word-break: break-all;
+    display: flex;
+    flex-direction: column;
+    white-space: pre-line;
+}
+
+.log-text::-webkit-scrollbar {
+    /*滚动条整体样式*/
+    width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+
+.log-text::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #003cab;
+}
+
+.log-text::-webkit-scrollbar-track {
+    /*滚动条里面轨道*/
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 1);
+    border:1px solid #1f4e7e;
+    border-radius: 10px;
+    background: #ffffff;
+}

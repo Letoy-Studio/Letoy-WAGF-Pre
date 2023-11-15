@@ -26,6 +26,12 @@
       </template>
       系统用户管理
     </t-menu-item>
+    <t-menu-item value="SystemLogs" @click="changePath('SystemLogs')">
+      <template #icon>
+        <RootListIcon/>
+      </template>
+      系统日志
+    </t-menu-item>
 <!--    <t-menu-item value="edit1">-->
 <!--      <template #icon>-->
 <!--        <SettingIcon/>-->
@@ -45,7 +51,8 @@ import {
   SettingIcon,
   BrowseIcon,
   UsergroupIcon,
-  UserIcon
+  UserIcon,
+    RootListIcon
 } from 'tdesign-icons-vue-next';
 import {MenuValue} from 'tdesign-vue-next';
 
@@ -58,7 +65,8 @@ import {MenuValue} from 'tdesign-vue-next';
     SettingIcon,
     BrowseIcon,
     UsergroupIcon,
-    UserIcon
+    UserIcon,
+    RootListIcon
   },
   computed: {
     currentPath() {

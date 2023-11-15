@@ -71,7 +71,6 @@ import {Options, Vue} from "vue-class-component";
 import {AddIcon, CloudUploadIcon, SearchIcon, CloudDownloadIcon, DiscountIcon} from 'tdesign-icons-vue-next';
 import MyRequest from "@/utils/LetoyService";
 import {MessagePlugin} from "tdesign-vue-next";
-
 @Options({
   components: {
     ElTable, ElTableColumn,
@@ -88,7 +87,6 @@ import {MessagePlugin} from "tdesign-vue-next";
       syncLoading:false
     }
   },
-
   mounted() {
     this.getData();
   },
